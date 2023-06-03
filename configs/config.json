@@ -1,0 +1,50 @@
+{
+    "train" : {
+        "log_interval" :  200,
+        "eval_interval" :  800,
+        "checkpoint_interval" : 1600,
+        "epochs" :  100,
+        "lr" : 10e-6,
+        "seed" : 40 ,
+        "lr_warmup_steps" : 3400,
+        "num_train_timesteps" : 500,
+        "board" : true,
+        "device" : "cuda:0",
+        "keep_chekpoints" : 3,
+        "checkpoint_dir" : "./logs/",
+        "log_dir" : "./logs/",
+        "cur_epoch" :  0,
+        "cur_iteration" : 0,
+        "eval_batch_size" : 16
+    },
+    "data" : {
+        "all_in_memory" : true,
+        "training_files" : "./datasets/cats/",
+        "train_shuffle" : true,
+        "train_batch_size" :  16 
+    },
+    "model" : {
+        "sample_size" : 128,
+        "in_channels" :  3,
+        "out_channels" :  3,
+        "layers_per_block" :  2,
+        "block_out_channels" : [128,128,256,256,512,512],
+        "down_block_types" : [
+            "DownBlock2D", 
+            "DownBlock2D",
+            "DownBlock2D",
+            "DownBlock2D",
+            "AttnDownBlock2D",
+            "DownBlock2D"
+        ],
+        "up_block_types" : [
+            "UpBlock2D",
+            "AttnUpBlock2D", 
+            "UpBlock2D",
+            "UpBlock2D",
+            "UpBlock2D",
+            "UpBlock2D"
+        ]
+    }
+}
+
