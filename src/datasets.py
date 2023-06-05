@@ -5,7 +5,7 @@ class CatDataset():
 
     def __init__(self, path, transform=None, all_in_memory=False):
 
-        self.image_paths = glob.glob(path + 'train/cat*')
+        self.image_paths = glob.glob(path + '*.jpg')
         self.transform = transform
         self.all_in_memory = all_in_memory
         if self.all_in_memory:

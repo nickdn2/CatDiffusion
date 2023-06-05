@@ -161,7 +161,7 @@ def train(model,criterion,optimizer,loader,noise_scheduler,lr_scheduler,config):
 
         train_loss = 0
 
-        for step, batch in enumerate(loader):
+        for batch in loader:
 
             history = train_batch(batch,
                                 model,
@@ -197,7 +197,9 @@ def train(model,criterion,optimizer,loader,noise_scheduler,lr_scheduler,config):
         writer.add_scalar('train/loss', history['loss'], global_step)
         pipeline = DDPMPipeline(unet=model, scheduler=noise_scheduler)
         images = evaluate(pipeline, config)
+        images = np.array(images).transpose((2,0,1))
         writer.add_image('evalute',images,global_step)
+        writer.close()
         
 
         
