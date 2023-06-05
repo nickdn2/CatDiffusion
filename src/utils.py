@@ -178,11 +178,13 @@ def train(model,criterion,optimizer,loader,noise_scheduler,lr_scheduler,config):
             if config.board:
                 if global_step % config.log_interval == 0:
                     writer.add_scalar('train/loss', history['loss'], global_step)
+                    writer.flush()
                 if global_step % config.eval_interval == 0:
                     pipeline = DDPMPipeline(unet=model, scheduler=noise_scheduler)
                     images = evaluate(pipeline, config)
                     images = np.array(images).transpose((2,0,1))
                     writer.add_image('evalute',images,global_step)
+                    writer.flush()
 
             global_step += 1
             train_loss += history['loss']
@@ -199,6 +201,7 @@ def train(model,criterion,optimizer,loader,noise_scheduler,lr_scheduler,config):
         images = evaluate(pipeline, config)
         images = np.array(images).transpose((2,0,1))
         writer.add_image('evalute',images,global_step)
+        writer.flush()
         writer.close()
         
 
